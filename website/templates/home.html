@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: white;
+  }
+  .note-card {
+    background-color: #2d2d2d;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #ff6b6b;
+    font-size: 1.5rem;
+  }
+  textarea {
+    background-color: #1e1e2f;
+    color: white;
+  }
+  .btn-primary {
+    background-color: #4e54c8;
+    border: none;
+  }
+  .btn-primary:hover {
+    background-color: #5d63db;
+  }
+</style>
+
+<div class="container py-4">
+<h2 class="text-center mb-4">Welcome, <strong>{{ current_user.first_name }}</strong></h2>
+  <h4 class="text-center">Your Notes</h4>
+
+  <div id="notes" class="mt-4">
+    {% for note in user.notes %}
+    <div class="note-card">
+      {{ note.data }}
+      <button type="button" class="close" onclick="deleteNote('{{ note.id }}')">
+        &times;
+      </button>
+      <small class="d-block mt-2 text-muted">Created: {{ note.date.strftime('%Y-%m-%d %H:%M') }}</small>
+    </div>
+    {% endfor %}
+  </div>
+
+  <form method="POST" class="mt-5">
+    <div class="form-group">
+      <label for="note">Add a New Note</label>
+      <textarea name="note" id="note" class="form-control" rows="4" placeholder="Write something..."></textarea>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary px-4">Add Note</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
